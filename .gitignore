@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# private working notes (kept locally, not published)
+PROJECT_STATUS.md
+
+# scratch / generated
+*_tmp*.js
+python/virtual_gel.png

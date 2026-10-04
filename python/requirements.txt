@@ -1,0 +1,2 @@
+primer3-py>=2.0
+matplotlib>=3.7

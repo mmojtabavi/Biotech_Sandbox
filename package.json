@@ -1,0 +1,13 @@
+{
+  "name": "biotech-sandbox",
+  "version": "1.0.0",
+  "description": "Biotech Sandbox: run real lab experiments in your browser. PCR, cloning, sequencing, qPCR, ELISA and CRISPR with real in-browser biochemistry.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/run-all.js"
+  },
+  "devDependencies": {
+    "jsdom": "^30.0.1"
+  }
+}
