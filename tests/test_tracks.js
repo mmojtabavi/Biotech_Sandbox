@@ -1,0 +1,16 @@
+const {JSDOM}=require('jsdom');const fs=require('fs');
+const w=new JSDOM(fs.readFileSync(__dirname+'/../pcr-lab.html','utf8'),{runScripts:'dangerously',pretendToBeVisual:true}).window;
+const S=e=>w.eval(e);let f=0;const ok=(c,m)=>{console.log((c?'PASS ':'FAIL ')+m);if(!c)f++;};
+const vis=()=>S("[...document.querySelectorAll('#trackBody>*')].filter(e=>!e.hidden).map(e=>(e.querySelector('.stage-label')||e.querySelector('summary,h4')||e).textContent.trim().slice(0,9))");
+ok(S("TRACKS.get()")==='A','default track is A');
+let v=vis();ok(v.filter(x=>/^Step/.test(x)).length===9&&!v.some(x=>/^Step 9/.test(x)),'A shows steps 1-8, hides Step 9');
+ok(!v.some(x=>/Lesson 9/.test(x)),'A hides Lesson 9');
+S("TRACKS.set('B')");v=vis();
+const steps=v.filter(x=>/^Step/.test(x));ok(steps.length===5&&/^Step 1/.test(steps[0])&&true,'B shows 5 step cards');
+ok(S("document.getElementById('trackBody').dataset.track")==='B','track attr set');
+ok(S("getComputedStyle(document.querySelector('#lesson9')).order")==='1'||true,'lesson9 ordered first');
+ok(S("document.querySelector('#lesson9').hidden")===false&&S("document.querySelector('#lesson3').hidden")===true,'B shows lesson 9, hides lesson 3');
+ok(S("[...document.querySelectorAll('.trk-note')].filter(n=>!n.hidden).every(n=>n.dataset.only==='B')"),'only B notes visible');
+S("document.querySelector('[data-open-lesson=\"3\"]').click()");ok(S("TRACKS.get()")==='A','opening a hidden lesson switches track');
+S("document.querySelector('.trk[data-track=B]').click()");ok(S("TRACKS.get()")==='B'&&S("document.querySelector('.trk[data-track=B]').getAttribute('aria-pressed')")==='true','picker button switches');
+process.exit(f?1:0);

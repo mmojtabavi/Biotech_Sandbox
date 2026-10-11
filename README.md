@@ -17,19 +17,21 @@ This is the first piece of a larger idea: a learn-by-doing platform, in the spir
 
 **How it's organized:** the app is one long page. At the top, **lessons** explain a concept and tell you what to try. Below them, **9 lab steps** are the hands-on stations where you actually run experiments. **Challenges** are scored tasks that use the same steps. Several steps also have an alternative method, marked with ′ or ″ (for example, 3′ Gibson assembly).
 
-**9 guided lessons and the steps they use**
+**9 guided lessons, one per step (Lesson N goes with Step N)**
 
-| Lesson | Steps used |
+Each lesson has four tabs: the basics in plain language, an animation, a hands-on tool, and "Your turn" buttons that run the real step. Each step card links back to its lesson. The alternative methods (3′, 3″, 5′, 6′) also have their own beginner guide inside the step card.
+
+| Lesson | Step it teaches |
 |---|---|
-| 1 · How PCR works | 1 |
-| 2 · Specificity & restriction digest | 2 |
-| 3 · Ligation & cloning | 1 → 2 → 3 (plus 3′ Gibson, 3″ Golden Gate) |
-| 4 · qPCR: quantifying, not just detecting | 1 → 7 |
-| 5 · ELISA: measuring by binding, not amplifying | 7 → 8 |
-| 6 · Splicing: one gene, two versions of the message | 4 |
-| 7 · CRISPR/Cas9: cutting DNA at a chosen address | 1 → 2 → 3 → 9 |
-| 8 · Sequencing: did your experiment really work? | 5 (Sanger), 5′ (NGS) |
-| 9 · Protein analysis: is your protein the right size? | 4 → 6 (SDS-PAGE), 6′ (HPLC) |
+| 1 · How PCR works | 1 · PCR |
+| 2 · Specificity & restriction digest | 2 · Restriction digest |
+| 3 · Ligation & cloning | 3 · Cloning (plus 3′ Gibson, 3″ Golden Gate) |
+| 4 · Transcription, splicing & translation: from gene to protein | 4 · Transcription & translation |
+| 5 · Sequencing: did your experiment really work? | 5 · Sanger (plus 5′ NGS) |
+| 6 · Protein analysis: is your protein the right size? | 6 · SDS-PAGE (plus 6′ HPLC) |
+| 7 · qPCR: quantifying, not just detecting | 7 · qPCR |
+| 8 · ELISA: measuring by binding, not amplifying | 8 · ELISA |
+| 9 · CRISPR/Cas9: cutting DNA at a chosen address | 9 · CRISPR guide design |
 
 **3 scored challenges:** clone-ready EGFP, directional (two-enzyme) cloning, and designing the most specific primer set.
 

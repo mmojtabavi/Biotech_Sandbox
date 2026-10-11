@@ -1,0 +1,13 @@
+const {JSDOM}=require('jsdom');const fs=require('fs');
+const w=new JSDOM(fs.readFileSync(__dirname+'/../pcr-lab.html','utf8'),{runScripts:'dangerously',pretendToBeVisual:true}).window;
+const S=e=>w.eval(e);let f=0;const ok=(c,m)=>{console.log((c?'PASS ':'FAIL ')+m);if(!c)f++;};
+S("loadPreset('clean');run()");
+let q=S("PV.q.state()");ok(q.eff.E>0.5&&q.run.ct!=null,'qPCR healthy primers give a Ct');
+S("loadPreset('mm3');run()");q=S("PV.q.state()");ok(q.eff.E===0&&q.run.ct==null,'dead primer: E=0, no Ct');
+S("document.getElementById('target').value='practice';loadTarget();PV.e.draw(false)");ok(S("PV.e.last")===null,'ELISA practice target: no antibody');
+S("document.getElementById('target').value='egfp';loadTarget();PV.e.draw(false)");ok(S("PV.e.last.kd")===2,'ELISA EGFP Kd=2 nM');
+S("loadPreset('clean');run();PV.c.draw(false)");ok(S("PV.c.last.verdict")==='cut','CRISPR perfect guide cuts');
+S("PV.c.mm.add(18);PV.c.draw(false)");ok(S("PV.c.last.verdict")==='seed','seed mismatch blocks cut');
+S("PV.c.mm=new Set([0]);PV.c.draw(false)");ok(S("PV.c.last.verdict")==='tolerated','distal mismatch tolerated');
+S("PV.c.mm=new Set();PV.c.pam='AAT';PV.c.draw(false)");ok(S("PV.c.last.verdict")==='nopam','no PAM no cut');
+process.exit(f?1:0);

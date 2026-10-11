@@ -1,4 +1,4 @@
-// Lessons 8 (Sequencing) and 9 (Protein analysis): presence, placement, and that every
+// Lessons 5 (Sequencing) and 6 (Protein analysis): presence, placement, and that every
 // claim their "Try" instructions make actually holds in the engine.
 const fs = require('fs');
 const path = require('path');
@@ -25,17 +25,16 @@ setTimeout(() => {
   const lessonTitles = summaries.filter(t => /^Lesson \d+ ·/.test(t));
   check('8 collapsible lessons (2-9), so 9 lessons in total', lessonTitles.length === 8);
   check('collapsible lessons numbered 2..9 in order', lessonTitles.every((t, i) => t.startsWith(`Lesson ${i + 2} ·`)));
-  const i8 = summaries.findIndex(t => t.startsWith('Lesson 8 ·'));
-  const i9 = summaries.findIndex(t => t.startsWith('Lesson 9 ·'));
-  const iC1 = summaries.findIndex(t => t.includes('Challenge 1'));
-  check('Lesson 8 is about sequencing', /Sequencing/.test(summaries[i8] || ''));
-  check('Lesson 9 is about protein analysis', /Protein analysis/.test(summaries[i9] || ''));
-  check('Lessons 8 and 9 come after Lesson 7 and before Challenge 1', i8 > 0 && i9 === i8 + 1 && iC1 === i9 + 1);
-  check('Lessons 8 and 9 start collapsed', !d.getElementById('lesson8').open && !d.getElementById('lesson9').open);
-  check('Lesson 8 refers to Steps 5 and 5′', /Step 5\b/.test(d.getElementById('lesson8').textContent) && /Step 5′/.test(d.getElementById('lesson8').textContent));
-  check('Lesson 9 refers to Steps 4, 6 and 6′', ['Step 4', 'Step 6 ', 'Step 6′'].every(k => d.getElementById('lesson9').textContent.includes(k.trim())));
+  const i5 = summaries.findIndex(t => t.startsWith('Lesson 5 ·'));
+  const i6 = summaries.findIndex(t => t.startsWith('Lesson 6 ·'));
+  check('Lesson 5 is about sequencing (Step 5)', /Sequencing/.test(summaries[i5] || ''));
+  check('Lesson 6 is about protein analysis (Step 6)', /Protein analysis/.test(summaries[i6] || ''));
+  check('Lessons 5 and 6 are adjacent and sit between Lessons 4 and 7', i5 > 0 && i6 === i5 + 1 && summaries[i5 - 1].startsWith('Lesson 4 ·') && summaries[i6 + 1].startsWith('Lesson 7 ·'));
+  check('Lessons 5 and 6 start collapsed', !d.getElementById('lesson5').open && !d.getElementById('lesson6').open);
+  check('Lesson 5 refers to Steps 5 and 5′', /Step 5\b/.test(d.getElementById('lesson5').textContent) && /Step 5′/.test(d.getElementById('lesson5').textContent));
+  check('Lesson 6 refers to Steps 4, 6 and 6′', ['Step 4', 'Step 6 ', 'Step 6′'].every(k => d.getElementById('lesson6').textContent.includes(k.trim())));
 
-  // Lesson 8 claims
+  // Lesson 5 (sequencing) claims
   d.getElementById('target').value = 'egfp'; w.loadTarget(); w.run();
   d.getElementById('seqSource').value = 'product-fwd'; w.renderSequencing();
   const fwd = T('seqSummary');
@@ -55,7 +54,7 @@ setTimeout(() => {
   check('NGS at 30× covers every position', /every position was covered/.test(s30));
   check('NGS at 30× still has individual read errors', /(\d+) simulated base-calling errors/.test(s30) && +s30.match(/(\d+) simulated base-calling errors/)[1] > 0);
 
-  // Lesson 9 claims
+  // Lesson 6 (protein) claims
   const prot = T('proteinSummary');
   check('EGFP translates to 239 aa', /239 aa/.test(prot));
   check('EGFP is about 26.9 kDa', /26\.9 kDa/.test(prot));
